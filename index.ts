@@ -1,5 +1,3 @@
-import { timeStamp } from "console"
-
 const w : number = window.innerWidth 
 const h : number = window.innerHeight 
 const parts : number = 7
@@ -222,5 +220,27 @@ class DoubleArmContainer {
 
     startUpdating(cb : Function) {
         this.curr.startUpdating(cb)
+    }
+}
+
+class Renderer {
+
+    dac : DoubleArmContainer = new DoubleArmContainer()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.dac.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.dac.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.dac.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
     }
 }
