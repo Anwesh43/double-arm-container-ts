@@ -14,6 +14,7 @@ const colors : Array<string> = [
     "#009688",
     "#FF9800"
 ] 
+const rot : number = Math.PI / 2
 
 class ScaleUtil {
 
@@ -63,6 +64,7 @@ class DrawingUtil {
         const sf : number = ScaleUtil.sinify(scale)
         context.save()
         context.translate(w / 2, h / 2)
+        context.rotate(rot * ScaleUtil.divideScale(sf, 6, parts))
         for (var j = 0; j < 2; j++) {
             context.save()
             context.scale(1 - 2 * j, 1)
